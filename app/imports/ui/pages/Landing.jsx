@@ -6,12 +6,12 @@ const Landing = () => (
   <Container id="landing-page" fluid className="py-3">
     <Row className="align-middle text-center">
       <Col xs={4}>
-        <Image roundedCircle src="/images/meteor-logo.png" width="150px" />
+        <Image roundedCircle src="/images/zero-waste-logo.png" width="200px" />
       </Col>
 
       <Col xs={8} className="d-flex flex-column justify-content-center">
-        <h1>Welcome to this template</h1>
-        <p>Now get to work and modify this app!</p>
+        <h1>Welcome Zero Waste</h1>
+        <p>We worked for a better planet!</p>
       </Col>
 
     </Row>
