@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -24,7 +24,7 @@ const Checkout = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { name, quantity, } = data;
+    const { size, quantity } = data;
     const owner = Meteor.user().username;
     Stuffs.collection.insert(
       { size, quantity, owner },
