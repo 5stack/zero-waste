@@ -11,7 +11,8 @@
  See https://getbootstrap.com/docs/5.2/customize/css-variables/
  */
 body {
-  --bs-light-rgb: var(--matr-navbar-bg-rgb);
+  background: fixed center url("images/zero-waste-background1.jpg");
+  background-size: cover;
 }
 
 /* Set the alert background on the signin and signup pages. */
@@ -26,3 +27,4 @@ body {
   padding-top: 10px;
   padding-bottom: 20px;
 }
+
