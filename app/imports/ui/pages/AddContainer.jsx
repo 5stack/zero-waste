@@ -1,21 +1,15 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, NumField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/Stuff';
 import { Containers } from '../../api/container/Container';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  containerId: String,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
+  amount: String,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -25,10 +19,10 @@ const AddContainer = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { containerId, condition } = data;
+    const { amount } = data;
     const owner = Meteor.user().username;
     Containers.collection.insert(
-      { containerId, condition, owner },
+      { amount, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -50,8 +44,7 @@ const AddContainer = () => {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <TextField name="containerId" />
-                <SelectField name="condition" />
+                <NumField name="amount" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
