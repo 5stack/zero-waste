@@ -37,10 +37,11 @@ const ListStuff = () => {
                 <th>Quantity</th>
                 <th>Condition</th>
                 <th>Edit</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
-              {stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
+              {stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} collection={Stuffs.collection}/>)}
             </tbody>
           </Table>
         </Col>
