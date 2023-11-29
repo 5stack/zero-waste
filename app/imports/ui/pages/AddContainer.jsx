@@ -40,11 +40,11 @@ const AddContainer = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Add Stuff</h2></Col>
+          <Col className="text-center text-white"><h2>Add Container</h2></Col>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <NumField name="amount" />
+                <NumField name="amount" decimal={null} />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
