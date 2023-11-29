@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Stuffs } from '../../api/stuff/Stuff';
+import { Navigate } from 'react-router-dom';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -21,12 +22,15 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /* Renders the AddStuff page for adding a document. */
-const AddStuff = () => {
+const AddStuff = ({ onSubmission }) => {
+  const [redirect, setRedirect] = useState(false);
+  const [submittedData, setSubmittedData] = useState(null);
 
-  // On submit, insert the data.
   const submit = (data, formRef) => {
     const { name, quantity, condition } = data;
     const owner = Meteor.user().username;
+    const orderId = generateOrderId();
+
     Stuffs.collection.insert(
       { name, quantity, condition, owner },
       (error) => {
@@ -34,12 +38,28 @@ const AddStuff = () => {
           swal('Error', error.message, 'error');
         } else {
           swal('Success', 'Item added successfully', 'success');
+          setRedirect(true);
+          setSubmittedData({ name, quantity, condition, orderId });
           formRef.reset();
+          onSubmission({ name, quantity, condition, owner, orderId });
         }
       },
     );
   };
-
+  const generateOrderId = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Months are zero based
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const orderId = `${year}${month}${day}${hour}${minutes}${seconds}`;
+    return orderId;
+  }
+  if (redirect) {
+    return <Navigate to="/confirmation" state={{ submittedData }} />;
+  }
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
   return (

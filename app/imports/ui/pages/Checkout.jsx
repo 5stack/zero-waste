@@ -15,6 +15,7 @@ const formSchema = new SimpleSchema({
     defaultValue: 'small',
   },
   quantity: Number,
+  name: String,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -24,7 +25,7 @@ const Checkout = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { name, quantity, } = data;
+    const { name, quantity, size } = data;
     const owner = Meteor.user().username;
     Stuffs.collection.insert(
       { size, quantity, owner },
@@ -49,6 +50,7 @@ const Checkout = () => {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
+                <TextField name="name" />
                 <SelectField name="size" />
                 <NumField name="quantity" decimal={null} />
                 <SubmitField value="Submit" />
