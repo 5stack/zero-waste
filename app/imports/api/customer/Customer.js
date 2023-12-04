@@ -2,19 +2,24 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /**
- * The ContainerCollection. It encapsulates state and variable values for stuff.
+ * The CustomersCollection. It encapsulates state and variable values for stuff.
  */
-class ContainerCollection {
+class CustomersCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'ContainerCollection';
+    this.name = 'CustomersCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      type: String,
-      amount: String,
+      name: String,
+      quantity: Number,
       owner: String,
+      condition: {
+        type: String,
+        allowedValues: ['good', 'fair', 'poor'],
+        defaultValue: 'good',
+      },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
@@ -25,7 +30,7 @@ class ContainerCollection {
 }
 
 /**
- * The singleton instance of the ContainerCollection.
- * @type {ContainerCollection}
+ * The singleton instance of the CustomersCollection.
+ * @type {CustomersCollection}
  */
-export const Containers = new ContainerCollection();
+export const Customers = new CustomersCollection();

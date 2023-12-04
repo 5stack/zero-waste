@@ -13,5 +13,11 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  ],
+
+  "defaultOrders": [
+    {"name": "Henry Guy", "quantity": 5, "owner": "john@foo.com"},
+    {"name": "Ronnie", "quantity": 3, "owner": "john@foo.com"},
+    {"name": "Andrew", "quantity": 1, "owner": "john@foo.com"}
   ]
 }

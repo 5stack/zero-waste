@@ -21,7 +21,6 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-
 TextField.propTypes = { name: PropTypes.string };
 /* Renders the AddStuff page for adding a document. */
 const Checkout = () => {
