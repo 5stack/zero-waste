@@ -12,8 +12,8 @@ const formSchema = new SimpleSchema({
   amount: String,
   type: {
     type: String,
-    allowedValues: ['Large', 'Medium', 'Small'],
-    defaultValue: 'Medium',
+    allowedValues: ['small', 'medium', 'large'],
+    defaultValue: 'medium',
   },
 });
 
@@ -37,6 +37,7 @@ const AddContainer = () => {
         }
       },
     );
+
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms

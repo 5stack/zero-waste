@@ -16,8 +16,8 @@ class ContainerCollection {
       owner: String,
       type: {
         type: String,
-        allowedValues: ['Large', 'Medium', 'Small'],
-        defaultValue: 'Medium',
+        allowedValues: ['small', 'medium', 'large'],
+        defaultValue: 'medium',
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.

@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import * as PropTypes from 'prop-types';
-import { Stuffs } from '../../api/stuff/Stuff';
+import { Customers } from '../../api/customer/Customer';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -29,7 +29,7 @@ const Checkout = () => {
   const submit = (data, formRef) => {
     const { size, quantity, name } = data;
     const owner = Meteor.user().username;
-    Stuffs.collection.insert(
+    Customers.collection.insert(
       { size, quantity, owner, name },
       (error) => {
         if (error) {
