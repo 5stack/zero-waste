@@ -17,9 +17,11 @@ import Checkout from '../pages/Checkout';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AddContainer from '../pages/AddContainer';
-import QRcode from '../pages/QRcode';
 import OrderConfirmation from '../pages/OrderConfirmation';
 import ListOrder from '../pages/ListOrder';
+import QRcodePage from '../pages/QRcodePage';
+import PaymentPage from '../pages/Payment';
+import Payment from '../pages/Payment';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -41,6 +43,7 @@ const App = () => {
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/qrcode" element={<ProtectedRoute><QRcode /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListOrder /></ProtectedRoute>} />
+          <Route path="/Payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddContainer /></ProtectedRoute>} />

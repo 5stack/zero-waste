@@ -1,10 +1,23 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 
 const OrderConfirmation = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const submittedData = location.state?.submittedData || {};
+
+  const redirectToQRCodePage = () => {
+
+    navigate('/qrcode', {
+      state: {
+        orderId: submittedData.orderId,
+        name: submittedData.name,
+        size: submittedData.size,
+        quantity: submittedData.quantity,
+      },
+    });
+  };
   return (
       <Container className="py-3">
         <Row className="justify-content-center">
@@ -17,6 +30,9 @@ const OrderConfirmation = () => {
                   <p>Name: {submittedData.name}</p>
                   <p>Size: {submittedData.size}</p>
                   <p>Quantity: {submittedData.quantity}</p>
+                  <Card.Footer>
+                    <button onClick={redirectToQRCodePage}>View QR Code for Payment</button>
+                  </Card.Footer>
                 </Card>
             )}
           </Col>
