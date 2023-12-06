@@ -6,8 +6,8 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import * as PropTypes from 'prop-types';
-import { Stuffs } from '../../api/stuff/Stuff';
 import { Navigate } from 'react-router-dom';
+import { Stuffs } from '../../api/stuff/Stuff';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -21,7 +21,6 @@ const formSchema = new SimpleSchema({
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
-
 
 TextField.propTypes = { name: PropTypes.string };
 /* Renders the AddStuff page for adding a document. */
