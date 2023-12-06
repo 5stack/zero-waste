@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, NumField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -10,11 +10,6 @@ import { Containers } from '../../api/container/Container';
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   amount: String,
-  type: {
-    type: String,
-    allowedValues: ['small', 'medium', 'large'],
-    defaultValue: 'medium',
-  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -24,10 +19,10 @@ const AddContainer = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { type, amount } = data;
+    const { amount } = data;
     const owner = Meteor.user().username;
     Containers.collection.insert(
-      { type, amount, owner },
+      { amount, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -37,7 +32,6 @@ const AddContainer = () => {
         }
       },
     );
-
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
@@ -46,11 +40,10 @@ const AddContainer = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Add Container</h2></Col>
+          <Col className="text-center"><h2>Add Stuff</h2></Col>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <SelectField name="type" />
                 <NumField name="amount" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
