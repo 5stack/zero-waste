@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -9,8 +9,12 @@ import { Containers } from '../../api/container/Container';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  type: String,
   amount: String,
+  type: {
+    type: String,
+    allowedValues: ['Large', 'Medium', 'Small'],
+    defaultValue: 'Medium',
+  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -45,7 +49,7 @@ const AddContainer = () => {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <TextField name="type" />
+                <SelectField name="type" />
                 <NumField name="amount" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
