@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, SubmitField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -10,7 +10,7 @@ import { Containers } from '../../api/container/Container';
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   amount: Number,
-  type: {
+  size: {
     type: String,
     allowedValues: ['small', 'medium', 'large'],
     defaultValue: 'medium',
@@ -24,14 +24,14 @@ const AddContainer = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { amount, type } = data;
+    const { amount, size } = data;
     const owner = Meteor.user().username;
-    const container = Containers.collection.findOne({ type: type });
+    const container = Containers.collection.findOne({ size: size });
     if (container) {
       Containers.collection.updateOne({ _id: container._id }, { $set: { amount: container.amount + amount } });
     } else {
       Containers.collection.insert(
-        { type, amount, owner },
+        { size, amount, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -55,6 +55,7 @@ const AddContainer = () => {
             <Card>
               <Card.Body>
                 <NumField name="amount" />
+                <SelectField name="size" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>

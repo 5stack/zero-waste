@@ -33,9 +33,10 @@ const ListOrder = () => {
           <Table striped bordered hover>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Name</th>
+                <th>Size</th>
                 <th>Quantity</th>
-                <th>Condition</th>
                 <th>Edit</th>
               </tr>
             </thead>

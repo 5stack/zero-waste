@@ -15,10 +15,11 @@ class CustomersCollection {
       name: String,
       quantity: Number,
       owner: String,
-      condition: {
+      id: String,
+      size: {
         type: String,
-        allowedValues: ['good', 'fair', 'poor'],
-        defaultValue: 'good',
+        allowedValues: ['small', 'medium', 'large'],
+        defaultValue: 'medium',
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.

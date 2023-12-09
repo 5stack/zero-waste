@@ -12,9 +12,10 @@ const StuffItem = ({ stuff, collection }) => {
   };
   return (
     <tr>
+      <td>{stuff.id}</td>
       <td>{stuff.name}</td>
+      <td>{stuff.size}</td>
       <td>{stuff.quantity}</td>
-      <td>{stuff.condition}</td>
       <td>
         <Link to={`/edit/${stuff._id}`}>Edit</Link>
       </td>
@@ -27,10 +28,13 @@ const StuffItem = ({ stuff, collection }) => {
 StuffItem.propTypes = {
   stuff: PropTypes.shape({
     name: PropTypes.string,
+    size: PropTypes.string,
     quantity: PropTypes.number,
     condition: PropTypes.string,
+    id: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   collection: PropTypes.object.isRequired,
 };
 

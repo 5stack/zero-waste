@@ -14,7 +14,7 @@ class ContainerCollection {
     this.schema = new SimpleSchema({
       amount: Number,
       owner: String,
-      type: {
+      size: {
         type: String,
         allowedValues: ['small', 'medium', 'large'],
         defaultValue: 'medium',
