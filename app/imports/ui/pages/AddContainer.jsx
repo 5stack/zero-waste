@@ -9,7 +9,7 @@ import { Containers } from '../../api/container/Container';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  amount: String,
+  amount: Number,
   type: {
     type: String,
     allowedValues: ['small', 'medium', 'large'],
@@ -26,18 +26,21 @@ const AddContainer = () => {
   const submit = (data, formRef) => {
     const { type, amount } = data;
     const owner = Meteor.user().username;
-    Containers.collection.insert(
-      { type, amount, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      },
-    );
-
+    if (Containers.collection.find(type)) {
+      Containers.collection.updateOne({ _id: Containers.collection.find(type)._id }, { $set: { amount: Containers.collection.find(type).amount + amount } });
+    } else {
+      Containers.collection.insert(
+        { type, amount, owner },
+        (error) => {
+          if (error) {
+            swal('Error', error.message, 'error');
+          } else {
+            swal('Success', 'Item added successfully', 'success');
+            formRef.reset();
+          }
+        },
+      );
+    }
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms

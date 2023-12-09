@@ -5,7 +5,8 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import * as PropTypes from 'prop-types';
+// import * as PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { Stuffs } from '../../api/stuff/Stuff';
 
@@ -23,7 +24,19 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 TextField.propTypes = { name: PropTypes.string };
-/* Renders the AddStuff page for adding a document. */
+
+const generateOrderId = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Months are zero based
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+  const orderId = `${year}${month}${day}${hour}${minutes}${seconds}`;
+  return orderId;
+};
+
 const Checkout = ({ onSubmission }) => {
   const [redirect, setRedirect] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
@@ -42,22 +55,12 @@ const Checkout = ({ onSubmission }) => {
           setRedirect(true);
           setSubmittedData({ size, quantity, name, orderId });
           formRef.reset();
-          onSubmission({ size, quantity, name, orderId});
+          onSubmission({ size, quantity, name, orderId });
         }
       },
     );
   };
-  const generateOrderId = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // Months are zero based
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const orderId = `${year}${month}${day}${hour}${minutes}${seconds}`;
-    return orderId;
-  }
+
   if (redirect) {
     return <Navigate to="/confirmation" state={{ submittedData }} />;
   }
@@ -84,5 +87,7 @@ const Checkout = ({ onSubmission }) => {
     </Container>
   );
 };
-
+Checkout.propTypes = {
+  onSubmission: PropTypes.func.isRequired,
+};
 export default Checkout;
