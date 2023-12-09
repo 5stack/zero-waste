@@ -24,10 +24,11 @@ const AddContainer = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { amount } = data;
+    const { amount, type } = data;
     const owner = Meteor.user().username;
-    if (Containers.collection.find(type)) {
-      Containers.collection.updateOne({ _id: Containers.collection.find(type)._id }, { $set: { amount: Containers.collection.find(type).amount + amount } });
+    const container = Containers.collection.findOne({ type: type });
+    if (container) {
+      Containers.collection.updateOne({ _id: container._id }, { $set: { amount: container.amount + amount } });
     } else {
       Containers.collection.insert(
         { type, amount, owner },
