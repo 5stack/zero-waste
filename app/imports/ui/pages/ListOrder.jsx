@@ -8,6 +8,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const ListOrder = () => {
+  // allows for search to change dynamically
+  const [searchTerm, setSearchTerm] = useState('');
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, customers } = useTracker(() => {
     // Note that this subscription will get cleaned up
@@ -23,6 +25,12 @@ const ListOrder = () => {
       ready: rdy,
     };
   }, []);
+
+  const getFilteredCustomers = () => {
+    const regex = new RegExp(`^${searchTerm}`, 'i');
+    return customers.filter(customer => regex.test(customer.name));
+  };
+
   return (ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
@@ -30,6 +38,18 @@ const ListOrder = () => {
           <Col className="text-center">
             <h2>Orders</h2>
           </Col>
+
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Search..."
+              id="searchInput"
+              className="form-control"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -41,7 +61,7 @@ const ListOrder = () => {
               </tr>
             </thead>
             <tbody>
-              {customers.map((customer) => <StuffItem key={customer._id} stuff={customer} />)}
+              {getFilteredCustomers().map(customer => <StuffItem key={customer._id} stuff={customer} />)}
             </tbody>
           </Table>
         </Col>
