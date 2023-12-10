@@ -9,7 +9,7 @@ import { Containers } from '../../api/container/Container';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
-  amount: Number,
+  quantity: Number,
   size: {
     type: String,
     allowedValues: ['small', 'medium', 'large'],
@@ -24,14 +24,14 @@ const AddContainer = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { amount, size } = data;
+    const { quantity, size } = data;
     const owner = Meteor.user().username;
     const container = Containers.collection.findOne({ size: size });
     if (container) {
-      Containers.collection.updateOne({ _id: container._id }, { $set: { amount: container.amount + amount } });
+      Containers.collection.updateOne({ _id: container._id }, { $set: { quantity: container.quantity + quantity } });
     } else {
       Containers.collection.insert(
-        { size, amount, owner },
+        { size, quantity, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -54,7 +54,7 @@ const AddContainer = () => {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <NumField name="amount" />
+                <NumField name="quantity" />
                 <SelectField name="size" />
                 <SubmitField value="Submit" />
                 <ErrorsField />

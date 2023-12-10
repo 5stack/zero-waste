@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Stuffs } from '../../api/stuff/Stuff.js';
 import { Customers } from '../../api/customer/Customer';
 import { Containers } from '../../api/container/Container';
 
@@ -11,10 +10,22 @@ const addData = (data) => {
   Customers.collection.insert(data);
 };
 
+const contAddData = (data) => {
+  console.log(`  Adding: ${data.name} (${data.owner})`);
+  Containers.collection.insert(data);
+};
+
 // Initialize the StuffsCollection if empty.
 if (Customers.collection.find().count() === 0) {
   if (Meteor.settings.defaultData) {
     console.log('Creating default data.');
     Meteor.settings.defaultOrders.forEach(data => addData(data));
+  }
+}
+
+if (Containers.collection.find().count() === 0) {
+  if (Meteor.settings.defaultData) {
+    console.log('Creating default data.');
+    Meteor.settings.defaultOrders.forEach(data => contAddData(data));
   }
 }

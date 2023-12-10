@@ -16,8 +16,14 @@
   ],
 
   "defaultOrders": [
-    {"name": "Henry Guy", "quantity": 5, "owner": "john@foo.com"},
-    {"name": "Ronnie", "quantity": 3, "owner": "john@foo.com"},
-    {"name": "Andrew", "quantity": 1, "owner": "john@foo.com"}
+    {"name": "Henry Guy", "quantity": 5, "owner": "john@foo.com", "id": "323341", "size": "small"},
+    {"name": "Ronnie", "quantity": 3, "owner": "john@foo.com", "id": "555123", "size": "medium"},
+    {"name": "Andrew", "quantity": 1, "owner": "john@foo.com", "id": "999000", "size": "small"}
+  ],
+
+  "defaultContainers": [
+    {"amount": 20, "owner": "john@foo.com", "size": "small"},
+    {"amount": 15, "owner": "john@foo.com", "size": "medium"},
+    {"amount": 10, "owner": "john@foo.com", "size": "large"}
   ]
 }
