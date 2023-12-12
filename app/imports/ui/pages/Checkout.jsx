@@ -38,39 +38,26 @@ const generateOrderId = () => {
 };
 
 const Checkout = ({ onSubmission }) => {
-  // ... (previous code)
-
+  const [redirect, setRedirect] = useState(false);
+  const [submittedData, setSubmittedData] = useState(null);
+  // On submit, insert the data.
   const submit = (data, formRef) => {
     const { size, quantity, name } = data;
     const owner = Meteor.user().username;
     const orderId = generateOrderId();
-
     Customers.collection.insert(
-        { size, quantity, owner, name },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Success', 'Item added successfully', 'success');
-
-            // Assuming you have a field named 'quantity' in the Customers collection
-            // Subtracting the submitted quantity from the existing quantity
-            Customers.collection.update(
-                {owner, name},
-                {$inc: {quantity: -quantity}},
-                (updateError) => {
-                  if (updateError) {
-                    swal('Error', updateError.message, 'error');
-                  } else {
-                    setRedirect(true);
-                    setSubmittedData({size, quantity, name, orderId});
-                    formRef.reset();
-                    onSubmission({size, quantity, name, orderId});
-                  }
-                }
-            );
-          }
+      { size, quantity, owner, name },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Item added successfully', 'success');
+          setRedirect(true);
+          setSubmittedData({ size, quantity, name, orderId });
+          formRef.reset();
+          onSubmission({ size, quantity, name, orderId });
         }
+      },
     );
   };
 
@@ -100,7 +87,6 @@ const Checkout = ({ onSubmission }) => {
     </Container>
   );
 };
-
 Checkout.propTypes = {
   onSubmission: PropTypes.func.isRequired,
 };
